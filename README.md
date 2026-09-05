@@ -1,5 +1,29 @@
 # seven 的工作空间
 
+一个由 Jekyll 构建的中文个人网站，部署到 Cloudflare Pages 后可启用私有编辑后台。
+
+## Cloudflare Pages 部署
+
+1. 在 Cloudflare Dashboard 创建 **Pages** 项目并连接此 GitHub 仓库。
+2. 构建命令填写 `bundle exec jekyll build`，构建输出目录填写 `_site`。
+3. 在 Pages 项目的 **Settings → Environment variables** 中添加以下变量：
+
+| 变量 | 值 |
+| --- | --- |
+| `GITHUB_CLIENT_ID` | GitHub OAuth App 的 Client ID |
+| `GITHUB_CLIENT_SECRET` | GitHub OAuth App 的 Client secret（必须设为加密密钥） |
+| `OAUTH_REDIRECT_URI` | `https://你的-pages-域名/api/auth/callback` |
+| `ADMIN_GITHUB_LOGIN` | `seven728024155-spec` |
+| `GITHUB_OWNER` | `seven728024155-spec` |
+| `GITHUB_REPO` | `seven-workspace` |
+| `GITHUB_BRANCH` | `main` |
+| `SESSION_SECRET` | 至少 32 位的随机字符串（必须设为加密密钥） |
+
+4. 在 GitHub **Settings → Developer settings → OAuth Apps** 创建 OAuth App，Homepage URL 填你的 Pages 域名，Authorization callback URL 填上表中的 `OAUTH_REDIRECT_URI`。
+5. 在后台访问 `https://你的-pages-域名/admin/`。只有 `ADMIN_GITHUB_LOGIN` 指定的 GitHub 账号可以完成登录。
+
+后台发布文章会直接向 GitHub 提交 Markdown，并由 Cloudflare Pages 自动构建；资源上传会写入 `files/`，单个文件上限为 20 MB。
+
 > 一个托管在 GitHub Pages 上的中文个人主页。
 > 展示文章、整理笔记、分享可下载的资源。纯静态、零数据库、无追踪。
 

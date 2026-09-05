@@ -1,0 +1,9 @@
+# 仅供本地开发参考。不要提交真实值，也不要把本文件改名为 .dev.vars 后提交。
+GITHUB_CLIENT_ID=""
+GITHUB_CLIENT_SECRET=""
+OAUTH_REDIRECT_URI="http://localhost:8788/api/auth/callback"
+ADMIN_GITHUB_LOGIN="seven728024155-spec"
+GITHUB_OWNER="seven728024155-spec"
+GITHUB_REPO="seven-workspace"
+GITHUB_BRANCH="main"
+SESSION_SECRET="replace-with-a-long-random-string"

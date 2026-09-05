@@ -23,3 +23,7 @@ Thumbs.db
 # 临时文件
 *.log
 *.tmp
+_site/
+.jekyll-cache/
+.dev.vars
+.wrangler/

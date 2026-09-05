@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#f7f7f5" />
+  <title>后台 · seven</title>
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body class="admin-page">
+  <main class="admin-shell">
+    <a class="admin-brand" href="../"><span class="brand-mark">S</span><span>seven / 后台</span></a>
+
+    <section class="admin-login" id="login-panel" hidden>
+      <p class="eyebrow">Private workspace</p>
+      <h1>写点新的。</h1>
+      <p>使用授权的 GitHub 账号登录后，可以直接发布文章和资源。</p>
+      <a class="btn btn-primary" href="../api/auth/login">使用 GitHub 登录</a>
+    </section>
+
+    <section class="admin-workspace" id="workspace" hidden>
+      <div class="admin-heading">
+        <div><p class="eyebrow">Editor</p><h1>你好，<span id="account-name"></span></h1></div>
+        <button class="btn btn-ghost" type="button" id="logout">退出登录</button>
+      </div>
+      <div class="admin-grid">
+        <form class="admin-card" id="post-form">
+          <div class="admin-card-heading"><span>01</span><h2>发布文章</h2></div>
+          <label>标题<input name="title" maxlength="120" required placeholder="给这篇文章起个标题" /></label>
+          <label>标签 <small>用逗号分隔，可留空</small><input name="tags" maxlength="100" placeholder="工具，AI，随笔" /></label>
+          <label>正文 <small>支持 Markdown</small><textarea name="body" rows="13" required placeholder="# 从这里开始写\n\n记录你的想法……"></textarea></label>
+          <button class="btn btn-primary" type="submit">发布文章</button>
+        </form>
+        <form class="admin-card" id="file-form">
+          <div class="admin-card-heading"><span>02</span><h2>发布资源 / 应用</h2></div>
+          <p>上传后，文件会自动出现在网站的资源页。单个文件最多 20 MB。</p>
+          <label class="file-picker">选择文件<input name="file" type="file" required /><span id="file-name">尚未选择文件</span></label>
+          <button class="btn btn-primary" type="submit">发布资源</button>
+        </form>
+      </div>
+      <p class="admin-notice" id="notice" role="status"></p>
+    </section>
+  </main>
+  <script src="./admin.js"></script>
+</body>
+</html>
