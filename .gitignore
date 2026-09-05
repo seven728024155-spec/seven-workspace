@@ -20,10 +20,12 @@ Thumbs.db
 # 项目自己的"用户数据"目录（不要同步）
 .workbuddy/
 
-# 临时文件
+# 临时文件与缓存
 *.log
 *.tmp
 _site/
 .jekyll-cache/
 .dev.vars
 .wrangler/
+__pycache__/
+*.pyc

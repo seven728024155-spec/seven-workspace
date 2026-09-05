@@ -1,96 +1,70 @@
 # seven 的工作空间
 
-一个由 Jekyll 构建的中文个人网站，部署到 Cloudflare Pages 后可启用私有编辑后台。
-
-## Cloudflare Pages 部署
-
-1. 在 Cloudflare Dashboard 创建 **Pages** 项目并连接此 GitHub 仓库。
-2. 构建命令填写 `bundle exec jekyll build`，构建输出目录填写 `_site`。
-3. 在 Pages 项目的 **Settings → Environment variables** 中添加以下变量：
-
-| 变量 | 值 |
-| --- | --- |
-| `GITHUB_CLIENT_ID` | GitHub OAuth App 的 Client ID |
-| `GITHUB_CLIENT_SECRET` | GitHub OAuth App 的 Client secret（必须设为加密密钥） |
-| `OAUTH_REDIRECT_URI` | `https://你的-pages-域名/api/auth/callback` |
-| `ADMIN_GITHUB_LOGIN` | `seven728024155-spec` |
-| `GITHUB_OWNER` | `seven728024155-spec` |
-| `GITHUB_REPO` | `seven-workspace` |
-| `GITHUB_BRANCH` | `main` |
-| `SESSION_SECRET` | 至少 32 位的随机字符串（必须设为加密密钥） |
-
-4. 在 GitHub **Settings → Developer settings → OAuth Apps** 创建 OAuth App，Homepage URL 填你的 Pages 域名，Authorization callback URL 填上表中的 `OAUTH_REDIRECT_URI`。
-5. 在后台访问 `https://你的-pages-域名/admin/`。只有 `ADMIN_GITHUB_LOGIN` 指定的 GitHub 账号可以完成登录。
-
-后台发布文章会直接向 GitHub 提交 Markdown，并由 Cloudflare Pages 自动构建；资源上传会写入 `files/`，单个文件上限为 20 MB。
-
 > 一个托管在 GitHub Pages 上的中文个人主页。
-> 展示文章、整理笔记、分享可下载的资源。纯静态、零数据库、无追踪。
+> 展示文章、整理笔记、分享可下载的资源。纯静态、零数据库、无追踪，配备专属可视化管理后台。
 
-## 在线预览
+## 在线地址
 
-仓库名：`seven-workspace`，部署在 GitHub Pages 的 Project Page。
-上线后地址：
+- **网站前台**：[https://seven728024155-spec.github.io/seven-workspace/](https://seven728024155-spec.github.io/seven-workspace/)
+- **管理后台**：[https://seven728024155-spec.github.io/seven-workspace/admin/](https://seven728024155-spec.github.io/seven-workspace/admin/)
 
-`https://seven728024155-spec.github.io/seven-workspace/`
+---
 
-（`seven728024155-spec.github.io` 已经是另一个项目站，所以这个站用子路径走。）
+## 管理后台功能（全新上线）
+
+网站内置专属可视化管理后台，支持**在线云端**与**本地一键**双模式：
+
+### 1. 云端在线后台（手机/任何电脑均可访问）
+1. 访问 `https://seven728024155-spec.github.io/seven-workspace/admin/` 或从网站前台页脚点击「⚙️ 管理后台」。
+2. 输入后台 PIN 码（默认 `seven2026`）与您的 GitHub Token（具有 `repo` 权限，仅保存在当前浏览器本地 `localStorage`，安全可靠）。
+3. 登录后即可自由写文章、修改网站文字、上传文件，保存即自动触发 GitHub Pages 自动构建上线！
+
+### 2. 本地一键后台（免 Token 极速操作 + 大文件支持）
+在本地电脑上，双击运行根目录下的 **`启动管理后台.bat`**：
+- 自动启动本地轻量服务并在浏览器打开 `http://127.0.0.1:4321/admin/`。
+- 免配 Token 极速登录。
+- 支持拖拽上传超大文件至 `files/` 目录。
+- 提供「一键推送到 GitHub」按钮，自动提交并发布最新内容。
+
+---
+
+## 核心功能
+
+1. **✍️ 自由写文章**：
+   - 查看所有已发布文章列表。
+   - 富文本 Markdown 工具栏，支持实时分屏预览、字数统计、文章别名与时间选择。
+   - 自动生成 YAML Front-matter 并提交至 `_posts/`。
+   - 支持编辑与删除现有文章。
+
+2. **📝 修改网站文字**：
+   - 可视化表单直接修改首页标语、副标、三大模块卡片介绍、宣言栏文案、关于页正文、页脚版权声明等。
+   - 配置保存在 `_data/site_content.yml`，一键保存即刻编译生效。
+
+3. **📦 文件与下载管理**：
+   - 拖拽或选择文件上传至 `files/` 下载中心。
+   - 自动在网站前台「资源」页面与首页卡片中展现。
+   - 支持直链测试、复制链接与一键删除。
+
+---
 
 ## 目录结构
 
 ```
 .
 ├── _config.yml          # Jekyll 配置
-├── _layouts/            # 页面布局（default / post）
+├── _data/               # 数据配置（整站可编辑文案 site_content.yml）
+├── _layouts/            # 页面布局（default / post，含后台入口）
 ├── _posts/              # Markdown 文章，按 YYYY-MM-DD-slug.md 命名
-├── index.html           # 主页（带 Liquid）
+├── admin/               # 管理后台（index.html / admin.css / admin.js）
+├── index.html           # 主页（动态读取 site_content）
 ├── posts/
-│   └── index.html       # 文章列表（Liquid 自动）
-├── files/               # 公开文件目录（push 即上下载页）
-├── about/               # 关于页
-└── assets/              # 样式 / 脚本 / 图片
+│   └── index.html       # 文章列表
+├── files/               # 公开文件下载目录
+├── about/
+│   └── index.html       # 关于页（动态读取 site_content）
+├── assets/              # 样式 / 脚本 / 图标
+├── admin_server.py      # 本地后台服务脚本
+└── 启动管理后台.bat     # Windows 一键启动脚本
 ```
-
-## 写一篇新文章
-
-1. 在 `_posts/` 目录新建 `YYYY-MM-DD-slug.md`（日期要早于今天）。
-2. 顶部写三行 YAML 头：
-
-   ```yaml
-   ---
-   title: 文章标题
-   date: 2026-09-05 18:30:00 +0800
-   categories: [分类]
-   tags: [标签1, 标签2]
-   ---
-   ```
-
-3. 正文按 Markdown 写即可。
-4. `git add . && git commit -m "post: 新增xxx" && git push`
-5. GitHub Pages 几十秒到一两分钟重新编译，访问 `/2026/09/05/slug.html` 即可。
-
-## 上传一个可下载文件
-
-直接把文件丢进 `files/` 目录，推送即可。
-`files/index.html` 会自动通过 GitHub API 列出文件并提供 raw 直链下载。
-
-> 单文件建议 ≤ 100 MB（GitHub 单文件硬上限），更大的资源请走外部存储后挂链接。
-
-## 本地预览（Jekyll）
-
-```bash
-gem install jekyll bundler
-bundle init && bundle add jekyll
-bundle exec jekyll serve
-# → http://localhost:4000
-```
-
-不打算本地预览也完全没问题——直接 push 就好。
-
-## 定制
-
-- 颜色 / 字号：改 `assets/css/style.css` 顶部 `:root`。
-- 主题色彩：找 `--accent` 改。
-- 添加版块：在 `index.html` 内增加卡片，或者新建一个 `_includes/section-xxx.html` 然后 `{% include xxx %}`。
 
 —— enjoy ✦

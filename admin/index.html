@@ -1,48 +1,474 @@
+---
+layout: null
+---
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex, nofollow" />
-  <meta name="theme-color" content="#f7f7f5" />
-  <title>后台 · seven</title>
+  <title>管理后台 · seven 的工作空间</title>
   <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="./admin.css" />
 </head>
-<body class="admin-page">
-  <main class="admin-shell">
-    <a class="admin-brand" href="../"><span class="brand-mark">S</span><span>seven / 后台</span></a>
+<body class="admin-body">
 
-    <section class="admin-login" id="login-panel" hidden>
-      <p class="eyebrow">Private workspace</p>
-      <h1>写点新的。</h1>
-      <p>使用授权的 GitHub 账号登录后，可以直接发布文章和资源。</p>
-      <a class="btn btn-primary" href="../api/auth/login">使用 GitHub 登录</a>
-    </section>
+  <!-- 登录授权遮罩 -->
+  <div id="auth-modal" class="auth-overlay">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <span class="auth-logo">⚙︎</span>
+        <h2>seven 的工作空间</h2>
+        <p class="auth-sub">管理后台登录</p>
+      </div>
 
-    <section class="admin-workspace" id="workspace" hidden>
-      <div class="admin-heading">
-        <div><p class="eyebrow">Editor</p><h1>你好，<span id="account-name"></span></h1></div>
-        <button class="btn btn-ghost" type="button" id="logout">退出登录</button>
+      <div id="local-mode-banner" class="alert-box success-box" style="display:none;">
+        <span class="badge">本地模式</span> 已检测到本地服务运行中，免配置直接登录！
       </div>
-      <div class="admin-grid">
-        <form class="admin-card" id="post-form">
-          <div class="admin-card-heading"><span>01</span><h2>发布文章</h2></div>
-          <label>标题<input name="title" maxlength="120" required placeholder="给这篇文章起个标题" /></label>
-          <label>标签 <small>用逗号分隔，可留空</small><input name="tags" maxlength="100" placeholder="工具，AI，随笔" /></label>
-          <label>正文 <small>支持 Markdown</small><textarea name="body" rows="13" required placeholder="# 从这里开始写\n\n记录你的想法……"></textarea></label>
-          <button class="btn btn-primary" type="submit">发布文章</button>
-        </form>
-        <form class="admin-card" id="file-form">
-          <div class="admin-card-heading"><span>02</span><h2>发布资源 / 应用</h2></div>
-          <p>上传后，文件会自动出现在网站的资源页。单个文件最多 20 MB。</p>
-          <label class="file-picker">选择文件<input name="file" type="file" required /><span id="file-name">尚未选择文件</span></label>
-          <button class="btn btn-primary" type="submit">发布资源</button>
-        </form>
+
+      <form id="auth-form" onsubmit="return false;">
+        <div class="form-group">
+          <label for="admin-pin">后台管理 PIN 码</label>
+          <input type="password" id="admin-pin" class="input-control" placeholder="请输入管理密码（默认: seven2026）" autocomplete="current-password" />
+        </div>
+
+        <div id="token-group" class="form-group">
+          <div class="label-row">
+            <label for="github-token">GitHub Token (云端模式需填写)</label>
+            <a href="https://github.com/settings/tokens/new?scopes=repo&description=seven-workspace-admin" target="_blank" rel="noopener" class="text-link">去生成 Token ↗</a>
+          </div>
+          <input type="password" id="github-token" class="input-control" placeholder="ghp_... 或 gho_... (具有 repo 权限)" autocomplete="off" />
+          <p class="form-tip">
+            💡 Token 仅保存在您当前浏览器的本地（localStorage），不会上传至任何第三方服务器。
+          </p>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="btn-login" class="btn btn-primary btn-block">登 录 后 台</button>
+        </div>
+        <div id="auth-msg" class="auth-msg"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 后台主界面容器 -->
+  <div id="admin-app" class="admin-layout" style="display:none;">
+
+    <!-- 侧边导航栏 -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <a href="../" class="sidebar-brand" title="返回网站前台">
+          <span class="brand-icon">⚙︎</span>
+          <span class="brand-text">seven 后台</span>
+        </a>
       </div>
-      <p class="admin-notice" id="notice" role="status"></p>
-    </section>
-  </main>
+
+      <nav class="sidebar-nav">
+        <a href="#posts" class="nav-item active" data-tab="posts">
+          <span class="nav-icon">✍️</span>
+          <span class="nav-label">文章管理</span>
+        </a>
+        <a href="#content" class="nav-item" data-tab="content">
+          <span class="nav-icon">📝</span>
+          <span class="nav-label">网站文字</span>
+        </a>
+        <a href="#files" class="nav-item" data-tab="files">
+          <span class="nav-icon">📦</span>
+          <span class="nav-label">文件下载</span>
+        </a>
+        <a href="#sync" class="nav-item" data-tab="sync">
+          <span class="nav-icon">🚀</span>
+          <span class="nav-label">发布与同步</span>
+        </a>
+        <a href="#settings" class="nav-item" data-tab="settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">系统设置</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-status">
+          <span id="connection-dot" class="status-dot online"></span>
+          <span id="connection-label" class="status-text">检查连接中…</span>
+        </div>
+        <div class="sidebar-actions">
+          <a href="../" target="_blank" class="btn-sidebar-link" title="在前台打开网站">打开前台 ↗</a>
+          <button id="btn-logout" class="btn-sidebar-link" title="退出后台登录">退出</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="admin-main">
+
+      <!-- 顶栏状态 -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <button id="btn-toggle-sidebar" class="btn-icon mobile-only" title="展开/收起菜单">☰</button>
+          <h1 id="page-title" class="topbar-title">文章管理</h1>
+        </div>
+        <div class="topbar-right">
+          <div id="global-status-pill" class="status-pill">
+            <span class="pill-dot"></span>
+            <span class="pill-text">就绪</span>
+          </div>
+          <a href="../" target="_blank" class="btn btn-outline btn-sm">预览网站 ↗</a>
+        </div>
+      </header>
+
+      <!-- TAB 1: 文章管理 -->
+      <section id="tab-posts" class="admin-tab-pane active">
+        <!-- 列表面板 -->
+        <div id="posts-list-view" class="panel-card">
+          <div class="panel-header">
+            <div class="header-search">
+              <input type="text" id="post-search-input" class="input-control" placeholder="搜索文章标题、标签..." />
+            </div>
+            <div class="header-buttons">
+              <button id="btn-new-post" class="btn btn-primary">➕ 新建文章</button>
+              <button id="btn-refresh-posts" class="btn btn-secondary">🔄 刷新</button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="admin-table" id="posts-table">
+              <thead>
+                <tr>
+                  <th>标题</th>
+                  <th>文件名</th>
+                  <th>发布日期</th>
+                  <th>分类 / 标签</th>
+                  <th style="width: 140px;">操作</th>
+                </tr>
+              </thead>
+              <tbody id="posts-tbody">
+                <tr><td colspan="5" class="muted-td">正在加载文章列表…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 编辑面板 -->
+        <div id="post-editor-view" class="panel-card" style="display:none;">
+          <div class="editor-top-actions">
+            <button id="btn-back-posts" class="btn btn-secondary btn-sm">← 返回文章列表</button>
+            <div class="top-btn-group">
+              <button id="btn-save-post" class="btn btn-primary">🚀 保存并发布</button>
+            </div>
+          </div>
+
+          <div class="editor-meta-grid">
+            <div class="form-group">
+              <label for="post-title">文章标题 *</label>
+              <input type="text" id="post-title" class="input-control font-bold" placeholder="输入文章标题，如：我的第一篇技术笔记" />
+            </div>
+            <div class="form-group">
+              <label for="post-slug">文件名 / 别名 (slug) *</label>
+              <input type="text" id="post-slug" class="input-control" placeholder="例如：my-first-post（只能用英文字母、数字和连字符）" />
+            </div>
+            <div class="form-group">
+              <label for="post-date">发布时间 *</label>
+              <div class="input-with-button">
+                <input type="text" id="post-date" class="input-control" placeholder="YYYY-MM-DD HH:MM:SS" />
+                <button type="button" id="btn-date-now" class="btn btn-outline btn-sm">设为现在</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="post-categories">分类 (用逗号分隔)</label>
+              <input type="text" id="post-categories" class="input-control" placeholder="例如：工具, 随笔" />
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label for="post-tags">标签 (用逗号分隔)</label>
+              <input type="text" id="post-tags" class="input-control" placeholder="例如：AI, Python, Windows" />
+            </div>
+          </div>
+
+          <!-- Markdown 编辑工具栏 -->
+          <div class="md-toolbar">
+            <button type="button" class="tool-btn" data-md="h2" title="二级标题">H2</button>
+            <button type="button" class="tool-btn" data-md="h3" title="三级标题">H3</button>
+            <button type="button" class="tool-btn" data-md="bold" title="加粗 (Ctrl+B)"><b>B</b></button>
+            <button type="button" class="tool-btn" data-md="italic" title="斜体 (Ctrl+I)"><i>I</i></button>
+            <button type="button" class="tool-btn" data-md="quote" title="引用">“ ”</button>
+            <button type="button" class="tool-btn" data-md="code" title="行内代码">`code`</button>
+            <button type="button" class="tool-btn" data-md="codeblock" title="代码块">```</button>
+            <button type="button" class="tool-btn" data-md="ul" title="无序列表">• 列表</button>
+            <button type="button" class="tool-btn" data-md="ol" title="有序列表">1. 列表</button>
+            <button type="button" class="tool-btn" data-md="link" title="插入链接">🔗 链接</button>
+            <button type="button" class="tool-btn" data-md="img" title="插入图片">🖼️ 图片</button>
+            <button type="button" class="tool-btn" data-md="hr" title="分割线">——</button>
+            <div class="toolbar-spacer"></div>
+            <span id="editor-word-count" class="word-count-badge">0 字</span>
+          </div>
+
+          <!-- 编辑区与实时预览 -->
+          <div class="md-workspace">
+            <div class="md-editor-pane">
+              <textarea id="post-content" class="md-textarea" placeholder="在此输入 Markdown 正文... 支持直接粘贴文本与链接"></textarea>
+            </div>
+            <div class="md-preview-pane">
+              <div class="preview-header">实时效果预览</div>
+              <div id="post-preview" class="post-preview markdown-body"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: 网站文字修改 -->
+      <section id="tab-content" class="admin-tab-pane">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2>网站文案管理</h2>
+              <p class="panel-sub">在此直接修改整站展示的文字内容，保存后系统将自动编译并更新线上展示。</p>
+            </div>
+            <button id="btn-save-content" class="btn btn-primary">💾 保存所有文字修改</button>
+          </div>
+
+          <div class="content-sections">
+            <!-- 模块 1: 首页主标语与欢迎区 -->
+            <div class="content-block">
+              <h3 class="block-title">🏠 首页顶部欢迎区</h3>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="txt-hero-eyebrow">顶部小标签 (Eyebrow)</label>
+                  <input type="text" id="txt-hero-eyebrow" class="input-control" />
+                </div>
+                <div class="form-group">
+                  <label for="txt-hero-btn-posts">按钮 1 文案</label>
+                  <input type="text" id="txt-hero-btn-posts" class="input-control" />
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label for="txt-hero-title">首页主标题 (支持 &lt;br /&gt; 换行)</label>
+                  <textarea id="txt-hero-title" class="input-control" rows="3"></textarea>
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label for="txt-hero-subtitle">首页简介副标题</label>
+                  <textarea id="txt-hero-subtitle" class="input-control" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="txt-hero-btn-files">按钮 2 文案</label>
+                  <input type="text" id="txt-hero-btn-files" class="input-control" />
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块 2: 首页三大卡片说明 -->
+            <div class="content-block">
+              <h3 class="block-title">🗂️ 首页三大模块卡片说明</h3>
+              <div class="form-grid-1">
+                <div class="form-group">
+                  <label for="txt-mod-posts">📝 文章卡片介绍文案</label>
+                  <input type="text" id="txt-mod-posts" class="input-control" />
+                </div>
+                <div class="form-group">
+                  <label for="txt-mod-files">📦 资源下载卡片介绍文案</label>
+                  <input type="text" id="txt-mod-files" class="input-control" />
+                </div>
+                <div class="form-group">
+                  <label for="txt-mod-about">👤 关于卡片介绍文案</label>
+                  <input type="text" id="txt-mod-about" class="input-control" />
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块 3: 首页宣言栏 -->
+            <div class="content-block">
+              <h3 class="block-title">💡 首页底部宣言栏 (Manifesto)</h3>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="txt-mani-eyebrow">顶部小标 (Eyebrow)</label>
+                  <input type="text" id="txt-mani-eyebrow" class="input-control" />
+                </div>
+                <div class="form-group">
+                  <label for="txt-mani-link">跳转链接文案</label>
+                  <input type="text" id="txt-mani-link" class="input-control" />
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label for="txt-mani-title">主标语文案 (支持 &lt;br /&gt; 换行)</label>
+                  <textarea id="txt-mani-title" class="input-control" rows="2"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块 4: 关于页面内容 -->
+            <div class="content-block">
+              <h3 class="block-title">🙋‍♂️ 关于我 (About 页文案)</h3>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="txt-about-title">页面大标题</label>
+                  <input type="text" id="txt-about-title" class="input-control" />
+                </div>
+                <div class="form-group">
+                  <label for="txt-about-subtitle">一句话定位 / 副标</label>
+                  <input type="text" id="txt-about-subtitle" class="input-control" />
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label for="txt-about-greeting">问候语 (第一行)</label>
+                  <input type="text" id="txt-about-greeting" class="input-control" />
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label for="txt-about-intro">建站初衷 / 自我介绍主段落</label>
+                  <textarea id="txt-about-intro" class="input-control" rows="3"></textarea>
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label for="txt-about-sec2">技术说明段落</label>
+                  <textarea id="txt-about-sec2" class="input-control" rows="2"></textarea>
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label for="txt-about-sec3">联系方式说明</label>
+                  <textarea id="txt-about-sec3" class="input-control" rows="2"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- 模块 5: 站点信息与页脚 -->
+            <div class="content-block">
+              <h3 class="block-title">⚙️ 站点品牌与页脚</h3>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="txt-site-name">网站名称 (Brand Name)</label>
+                  <input type="text" id="txt-site-name" class="input-control" />
+                </div>
+                <div class="form-group">
+                  <label for="txt-site-mark">品牌符号 (Brand Mark)</label>
+                  <input type="text" id="txt-site-mark" class="input-control" />
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label for="txt-site-footer">页脚版权文字</label>
+                  <input type="text" id="txt-site-footer" class="input-control" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="panel-bottom-action">
+            <button id="btn-save-content-bottom" class="btn btn-primary btn-lg">💾 保存所有文字修改</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: 文件与下载管理 -->
+      <section id="tab-files" class="admin-tab-pane">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2>文件与下载中心</h2>
+              <p class="panel-sub">在此上传的文件将直接存入 <code>files/</code> 目录，并在网站的“资源”页面与首页即时呈现给访客。</p>
+            </div>
+            <button id="btn-refresh-files" class="btn btn-secondary">🔄 刷新列表</button>
+          </div>
+
+          <!-- 文件拖拽上传区域 -->
+          <div id="drop-zone" class="upload-dropzone">
+            <div class="upload-icon">📤</div>
+            <h3>拖拽文件至此处上传，或点击选择</h3>
+            <p class="muted">支持 exe、zip、rar、pdf、docx、png 等任意类型文件</p>
+            <input type="file" id="file-input" multiple style="display:none;" />
+            <button type="button" id="btn-choose-file" class="btn btn-outline">选择电脑文件</button>
+            <div id="upload-progress-box" class="upload-progress-box" style="display:none;">
+              <div class="progress-bar-bg">
+                <div id="upload-progress-bar" class="progress-bar-fill"></div>
+              </div>
+              <span id="upload-status-text" class="progress-text">上传中…</span>
+            </div>
+          </div>
+
+          <!-- 文件列表表格 -->
+          <div class="table-container">
+            <table class="admin-table" id="files-table">
+              <thead>
+                <tr>
+                  <th>文件名</th>
+                  <th>文件大小</th>
+                  <th>更新时间</th>
+                  <th>下载链接</th>
+                  <th style="width: 140px;">操作</th>
+                </tr>
+              </thead>
+              <tbody id="files-tbody">
+                <tr><td colspan="5" class="muted-td">正在加载文件列表…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: 发布与同步 -->
+      <section id="tab-sync" class="admin-tab-pane">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2>发布与构建状态</h2>
+              <p class="panel-sub">查看 GitHub Pages 自动部署进度，或者在本地模式下一键提交代码与推送。</p>
+            </div>
+            <button id="btn-check-deploy" class="btn btn-secondary">🔄 检查线上状态</button>
+          </div>
+
+          <div class="deploy-grid">
+            <div class="deploy-card">
+              <h3>线上网站状态</h3>
+              <div id="pages-status-detail" class="status-box">
+                <p>正在查询 GitHub 部署状态…</p>
+              </div>
+              <div class="deploy-links">
+                <a href="https://github.com/seven728024155-spec/seven-workspace/actions" target="_blank" rel="noopener" class="btn btn-outline btn-sm">查看 GitHub Actions 运行记录 ↗</a>
+                <a href="https://seven728024155-spec.github.io/seven-workspace/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">访问线上主页 ↗</a>
+              </div>
+            </div>
+
+            <div id="local-sync-card" class="deploy-card">
+              <h3>本地 Git 一键推送</h3>
+              <p class="muted">在本地后台模式下，可一键把本地写好的文章、修改好的文字和上传的大文件同步至 GitHub。</p>
+              <button id="btn-git-push" class="btn btn-primary">🚀 一键推送到 GitHub (Git Push)</button>
+              <pre id="git-log-output" class="console-box">就绪。点击上方按钮执行推送。</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: 系统设置 -->
+      <section id="tab-settings" class="admin-tab-pane">
+        <div class="panel-card">
+          <div class="panel-header">
+            <div>
+              <h2>系统与账号设置</h2>
+              <p class="panel-sub">管理后台访问安全与 GitHub 授权凭据。</p>
+            </div>
+          </div>
+
+          <div class="settings-form">
+            <div class="form-group">
+              <label for="cfg-pin">后台访问 PIN 码</label>
+              <input type="text" id="cfg-pin" class="input-control" placeholder="设置访问后台的密码" />
+              <p class="form-tip">保存在浏览器中，用于防止未经授权的访客打开后台操作界面。</p>
+            </div>
+
+            <div class="form-group">
+              <label for="cfg-token">GitHub Personal Access Token</label>
+              <input type="password" id="cfg-token" class="input-control" placeholder="ghp_... 或 gho_..." />
+              <p class="form-tip">必须具备 <code>repo</code> 权限，用于在云端模式下直接调用 GitHub API 更新仓库内容。</p>
+            </div>
+
+            <div class="form-group">
+              <label>目标仓库配置</label>
+              <div class="readonly-badge">seven728024155-spec / seven-workspace (分支: main)</div>
+            </div>
+
+            <div class="settings-actions">
+              <button id="btn-save-settings" class="btn btn-primary">保存设置</button>
+              <button id="btn-clear-auth" class="btn btn-danger">清除凭据并退出</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 提示弹窗 (Toast) -->
+  <div id="toast" class="toast"></div>
+
   <script src="./admin.js"></script>
 </body>
 </html>

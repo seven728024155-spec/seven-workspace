@@ -13,8 +13,8 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="{{ '/' | relative_url }}">
-        <span class="brand-mark" aria-hidden="true">S</span>
-        <span class="brand-name">seven</span>
+        <span class="brand-mark" aria-hidden="true">{{ site.data.site_content.site.brand_mark | default: "S" }}</span>
+        <span class="brand-name">{{ site.data.site_content.site.brand_name | default: "seven" }}</span>
       </a>
       <nav class="site-nav" aria-label="主导航">
         <a class="{% if page.url == '/' or page.url == '/index.html' %}active{% endif %}" href="{{ '/' | relative_url }}">首页</a>
@@ -31,7 +31,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>© <span id="year"></span> seven · 由 GitHub Pages 托管</p>
+      <p>© <span id="year"></span> {{ site.data.site_content.site.footer_text | default: "seven · 由 GitHub Pages 托管" }} · <a href="{{ '/admin/' | relative_url }}" title="管理后台" style="opacity: 0.65; font-size: 0.9em; text-decoration: none;">⚙️ 管理后台</a></p>
     </div>
   </footer>
 

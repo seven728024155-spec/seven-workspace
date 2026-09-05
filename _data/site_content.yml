@@ -1,0 +1,41 @@
+# seven 的工作空间 · 整站文字内容配置
+# 此文件可通过管理后台直接修改并自动保存
+
+site:
+  brand_name: "seven"
+  brand_mark: "S"
+  footer_text: "seven · 由 GitHub Pages 托管"
+
+hero:
+  eyebrow: "个人工作空间 / 2026"
+  title: "想到的，<br />做出来的，<br />留在这里。"
+  subtitle: "Seven 的个人工作空间。记录值得写下的想法，分享真正有用的工具和文件。"
+  btn_posts: "看看文章"
+  btn_files: "浏览下载"
+
+modules:
+  posts_desc: "笔记、教程与随笔。把零散的思考，整理成可以回看的文字。"
+  files_desc: "把好用的工具、资料与模板放在这里，随时取用。"
+  about_desc: "我是 Seven，常驻西安。喜欢折腾工具，也喜欢把复杂的事讲清楚。"
+
+manifesto:
+  eyebrow: "这个地方"
+  title: "不追逐噪音，只留下<br />真正值得留下的东西。"
+  link_text: "认识 Seven ↗"
+  link_url: "/about/"
+
+about:
+  eyebrow: "About Seven"
+  title: "关于我"
+  subtitle: "在西安做点工具，写点东西，也持续保持好奇。"
+  greeting: "你好，我是 **Seven**。"
+  intro: "这里是我的个人工作空间。建它的初衷很简单：想有一个**真正属于自己**的地方，把日常学到的东西、做的小工具、读后整理的笔记都放进来。"
+  section1_title: "这里都有什么？"
+  section1_items:
+    - "**文章**——围绕工具、AI、编程、生活方法论的随笔与笔记。"
+    - "**下载**——偶尔会用到的脚本、模板、配置资源。"
+    - "**关于**——就是你现在看的这一页。"
+  section2_title: "技术说明"
+  section2_content: "整站由 **GitHub Pages** 托管，纯静态 HTML/CSS/JS，没有广告也没有追踪。内容更新在 [GitHub 仓库](https://github.com/seven728024155-spec/seven-workspace) 完成，推送后由 Jekyll 自动重新构建列表。"
+  section3_title: "联系我"
+  section3_content: "最靠谱的方式是在 GitHub 仓库里提 Issue，或者直接邮件。别的地方看缘分。"
