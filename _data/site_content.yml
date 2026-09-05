@@ -1,5 +1,5 @@
 # seven 的工作空间 · 整站文字内容配置
-# 由管理后台自动生成于 2026/9/6 03:32:00
+# 由管理后台自动生成于 2026/9/6 03:34:13
 
 site:
   brand_name: "seven"
@@ -32,10 +32,7 @@ about:
   intro: "这里是我的个人工作空间。建它的初衷很简单：想有一个**真正属于自己**的地方，把日常学到的东西、做的小工具、读后整理的笔记都放进来。"
   section1_title: "这里都有什么？"
   section1_items:
-    - "**文章**——围绕工具、AI、编程、生活方法论的随笔与笔记。"
-    - "**下载**——偶尔会用到的脚本、模板、配置资源。"
-    - "**关于**——就是你现在看的这一页。"
   section2_title: "技术说明"
-  section2_content: "整站由 **GitHub Pages** 托管，纯静态 HTML/CSS/JS，没有广告也没有追踪。内容更新在 [GitHub 仓库](https://github.com/seven728024155-spec/seven-workspace) 完成，推送后由 Jekyll 自动重新构建列表。"
+  section2_content: ""
   section3_title: "联系我"
-  section3_content: "最靠谱的方式是在 GitHub 仓库里提 Issue，或者直接邮件。别的地方看缘分。"
+  section3_content: ""
