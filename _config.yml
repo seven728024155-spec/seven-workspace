@@ -32,7 +32,6 @@ exclude:
 
 # 构建选项
 permalink: /:year/:month/:day/:title.html
-paginate: 10
 future: false
 show_drafts: false
 
