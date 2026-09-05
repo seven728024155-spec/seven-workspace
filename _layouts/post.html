@@ -1,0 +1,22 @@
+---
+layout: default
+---
+
+<section class="container page-header">
+  <p class="eyebrow">Post</p>
+  <h1 class="post-title">{{ page.title }}</h1>
+  <p class="post-meta">
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time>
+    {% if page.tags and page.tags != empty %}
+      · {% for tag in page.tags %}<span class="tag">{{ tag }}</span> {% endfor %}
+    {% endif %}
+  </p>
+</section>
+
+<article class="container post-body">
+  {{ content }}
+</article>
+
+<section class="container post-nav">
+  <a href="{{ '/posts/' | relative_url }}">← 返回文章列表</a>
+</section>

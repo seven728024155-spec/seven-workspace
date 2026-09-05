@@ -1,0 +1,25 @@
+# 构建产物与本地缓存
+.jekyll-cache/
+.jekyll-metadata
+_site/
+.sass-cache/
+node_modules/
+vendor/
+gemfiles/
+Gemfile.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# 项目自己的"用户数据"目录（不要同步）
+.workbuddy/
+
+# 临时文件
+*.log
+*.tmp

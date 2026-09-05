@@ -1,0 +1,51 @@
+# seven 的工作空间 · Jekyll 配置
+title: seven 的工作空间
+description: Seven 的个人工作空间——文章、笔记与可下载资源。
+author: seven
+url: "https://seven728024155-spec.github.io"
+baseurl: ""
+lang: zh-CN
+timezone: Asia/Shanghai
+
+# Markdown 引擎
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  hard_wrap: false
+
+# 不走 Jekyll 的目录 / 文件（前端资源、下载区、纯静态页面）
+exclude:
+  - assets/js/main.js
+  - assets/js/main.js.map
+  - files/README.md
+  - README.md
+  - LICENSE
+  - node_modules
+  - vendor
+  - .sass-cache
+  - .jekyll-cache
+  - gemfiles
+  - Gemfile
+  - Gemfile.lock
+
+# 构建选项
+permalink: /:year/:month/:day/:title.html
+paginate: 10
+future: false
+show_drafts: false
+
+# Collections（保留扩展位，目前未启用）
+collections:
+  drafts:
+    output: false
+
+# 默认 YAML front-matter
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      comments: false

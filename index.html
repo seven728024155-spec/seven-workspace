@@ -1,0 +1,77 @@
+---
+layout: default
+title: 首页
+---
+
+<!-- 欢迎区 -->
+<section class="hero">
+  <div class="container">
+    <p class="eyebrow">Seven · 个人主页</p>
+    <h1 class="hero-title">
+      把想到的、<br />
+      写下的、做出来的，<br />
+      都放在这里。
+    </h1>
+    <p class="hero-sub">
+      一个慢慢生长的个人工作空间——放文章、记想法、分享可以下载的文件。
+      内容由我维护，源代码托管在 GitHub。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{{ '/posts/' | relative_url }}">看看文章</a>
+      <a class="btn btn-ghost" href="{{ '/files/' | relative_url }}">浏览下载</a>
+    </div>
+  </div>
+</section>
+
+<!-- 三大模块卡片 -->
+<section class="container modules">
+  <article class="card">
+    <div class="card-icon">📝</div>
+    <h3>文章</h3>
+    <p>笔记、教程、随笔。Markdown 写好后 push 即上线。</p>
+    <ul class="latest-list">
+      {% for post in site.posts limit:3 %}
+        <li>
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
+        </li>
+      {% endfor %}
+      {% if site.posts == empty %}
+        <li class="muted">暂无文章，快去仓库新增一篇。</li>
+      {% endif %}
+    </ul>
+    <a class="card-link" href="{{ '/posts/' | relative_url }}">所有文章 →</a>
+  </article>
+
+  <article class="card">
+    <div class="card-icon">📦</div>
+    <h3>可下载</h3>
+    <p>把常用文件、工具、资料放到 files/，自动出现在下载页。</p>
+    <ul class="latest-list" id="latest-files">
+      <li class="muted">正在加载最新文件…</li>
+    </ul>
+    <a class="card-link" href="{{ '/files/' | relative_url }}">所有文件 →</a>
+  </article>
+
+  <article class="card">
+    <div class="card-icon">👤</div>
+    <h3>关于</h3>
+    <p>我是 Seven，常驻西安。喜欢折腾工具、写点东西。</p>
+    <p class="muted small">
+      当前由 GitHub Pages 托管。如有问题，欢迎在仓库给我提 Issue。
+    </p>
+    <a class="card-link" href="{{ '/about/' | relative_url }}">了解更多 →</a>
+  </article>
+</section>
+
+<section class="container callout">
+  <h2>怎么往这里加内容？</h2>
+  <ol class="steps">
+    <li>在仓库的 <code>_posts/</code> 目录新增 Markdown 文章（文件名 <code>YYYY-MM-DD-slug.md</code>）。</li>
+    <li>把要分享的文件丢进 <code>files/</code>。</li>
+    <li>推送后 GitHub Pages 自动编译，最快几十秒上线。</li>
+  </ol>
+  <a class="btn btn-ghost" href="https://github.com/seven728024155-spec/seven.github.io" target="_blank" rel="noopener">
+    访问 GitHub 仓库 ↗
+  </a>
+</section>

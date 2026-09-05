@@ -1,0 +1,28 @@
+---
+layout: default
+title: 所有文章
+permalink: /posts/
+---
+
+<section class="container page-header">
+  <p class="eyebrow">Posts</p>
+  <h1>所有文章</h1>
+  <p class="hero-sub">在这里找到所有发布过的笔记与文章。</p>
+</section>
+
+<section class="container">
+  {% if site.posts.size > 0 %}
+    <ul class="post-list">
+      {% for post in site.posts %}
+        <li class="item">
+          <a class="title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <ul class="post-list">
+      <li class="item muted">暂无文章。在仓库的 <code>_posts/</code> 目录新增 Markdown 即可。</li>
+    </ul>
+  {% endif %}
+</section>
