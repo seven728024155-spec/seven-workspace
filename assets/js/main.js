@@ -120,7 +120,13 @@
     try {
       const items = await fetchJson(`${apiBase}/files`);
       const files = items
-        .filter((it) => it.type === "file" && !it.name.toLowerCase().startsWith("readme"))
+        .filter(
+          (it) =>
+            it.type === "file" &&
+            !it.name.toLowerCase().startsWith("readme") &&
+            !it.name.startsWith(".") &&
+            it.name.toLowerCase() !== "index.html"
+        )
         .sort((a, b) => (a.name < b.name ? 1 : -1))
         .slice(0, 3);
       if (files.length === 0) {
