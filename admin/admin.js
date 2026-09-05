@@ -214,15 +214,22 @@
 
   // Base64 编码解码 (支持 UTF-8 中文字符)
   function utf8ToBase64(str) {
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
-      return String.fromCharCode("0x" + p1);
-    }));
+    const bytes = new TextEncoder().encode(str);
+    let binary = "";
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
   }
 
   function base64ToUtf8(str) {
-    return decodeURIComponent(Array.prototype.map.call(atob(str), function (c) {
-      return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(""));
+    const clean = (str || "").replace(/[\r\n\s]/g, "");
+    const binary = atob(clean);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return new TextDecoder("utf-8").decode(bytes);
   }
 
   // ---- 模式探测与网络请求抽象层 ----
@@ -870,8 +877,8 @@ ${content}
         state.contentSha = res.content.sha;
       }
 
-      showToast("✨ 整站文字配置已成功保存！", "success");
-      setStatus("保存成功", "success");
+      showToast("✨ 整站文字配置已成功保存！GitHub Pages 正在自动构建上线（约需30~45秒），查看前台请按 Ctrl+F5 强制刷新以清除浏览器缓存！", "success", 6000);
+      setStatus("已保存(构建中)", "success");
     } catch (e) {
       showToast(`保存失败: ${e.message}`, "error");
       setStatus("保存失败", "error");
