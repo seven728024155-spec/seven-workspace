@@ -21,6 +21,7 @@
         <a class="{% if page.url contains '/posts' or page.layout == 'post' %}active{% endif %}" href="{{ '/posts/' | relative_url }}">文章</a>
         <a class="{% if page.url contains '/files' %}active{% endif %}" href="{{ '/files/' | relative_url }}">资源</a>
         <a class="{% if page.url contains '/about' %}active{% endif %}" href="{{ '/about/' | relative_url }}">关于</a>
+        <a class="{% if page.url contains '/admin' %}active{% endif %}" href="{{ '/admin/' | relative_url }}">⚙️ 后台</a>
       </nav>
     </div>
   </header>
