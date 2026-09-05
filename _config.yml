@@ -15,10 +15,8 @@ kramdown:
   syntax_highlighter: rouge
   hard_wrap: false
 
-# 不走 Jekyll 的目录 / 文件（前端资源、下载区、纯静态页面）
+# 不走 Jekyll 的目录 / 文件（下载区、纯静态说明页）
 exclude:
-  - assets/js/main.js
-  - assets/js/main.js.map
   - files/README.md
   - README.md
   - LICENSE
