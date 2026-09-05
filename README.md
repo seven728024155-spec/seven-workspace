@@ -5,12 +5,12 @@
 
 ## 在线预览
 
-`sven.github.io` 风格的仓库以用户名命名后会成为 GitHub 的 User Page。
-本仓库名：`seven.github.io`，上线后地址：
+仓库名：`seven-workspace`，部署在 GitHub Pages 的 Project Page。
+上线后地址：
 
-`https://seven728024155-spec.github.io/`
+`https://seven728024155-spec.github.io/seven-workspace/`
 
-（也可以在 Settings → Pages 把 Custom domain 换成自己的域名。）
+（`seven728024155-spec.github.io` 已经是另一个项目站，所以这个站用子路径走。）
 
 ## 目录结构
 

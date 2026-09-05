@@ -7,7 +7,7 @@
   "use strict";
 
   const OWNER = "seven728024155-spec";
-  const REPO = "seven.github.io";
+  const REPO = "seven-workspace";
   const BRANCH = "main";
   const apiBase = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
 

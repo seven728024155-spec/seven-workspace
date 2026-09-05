@@ -3,7 +3,7 @@ title: seven 的工作空间
 description: Seven 的个人工作空间——文章、笔记与可下载资源。
 author: seven
 url: "https://seven728024155-spec.github.io"
-baseurl: ""
+baseurl: "/seven-workspace"
 lang: zh-CN
 timezone: Asia/Shanghai
 
