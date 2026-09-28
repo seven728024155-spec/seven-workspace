@@ -25,8 +25,6 @@
 .tt-disc { position:relative; width:88%; height:88%; border-radius:50%; display:grid; place-items:center; background:repeating-radial-gradient(circle at 50% 50%,rgba(255,255,255,.06) 0 1px,rgba(255,255,255,0) 1px 5px),radial-gradient(circle at 50% 50%,#262626 0%,#101010 55%,#000 100%); box-shadow:0 14px 34px -14px rgba(23,23,23,.55),inset 0 0 0 1px rgba(255,255,255,.09); animation:tt-spin 3.8s linear infinite; animation-play-state:paused; }
 .tt-disc.spinning { animation-play-state:running; }
 @keyframes tt-spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
-.tt-label { position:relative; width:40%; height:40%; border-radius:50%; overflow:hidden; background:#111; box-shadow:0 0 0 5px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.16); display:grid; place-items:center; }
-.tt-label img { width:100%; height:100%; object-fit:cover; display:block; }
 .tt-hole { position:absolute; left:50%; top:50%; width:8px; height:8px; margin:-4px 0 0 -4px; border-radius:50%; background:#000; box-shadow:0 0 0 2px rgba(255,255,255,.12); z-index:3; }
 .tt-shine { position:absolute; inset:6%; border-radius:50%; pointer-events:none; background:conic-gradient(from 210deg,rgba(255,255,255,0) 0deg,rgba(255,255,255,.12) 26deg,rgba(255,255,255,0) 70deg,rgba(255,255,255,0) 190deg,rgba(255,255,255,.06) 214deg,rgba(255,255,255,0) 250deg); mix-blend-mode:screen; }
 .tt-arm { position:absolute; top:0; right:0; width:46%; height:46%; transform-origin:88% 12%; transform:rotate(-26deg); transition:transform .9s cubic-bezier(.34,.02,.2,1); pointer-events:none; z-index:6; }
@@ -83,7 +81,6 @@
 .song-cover img { width:100%; height:100%; object-fit:cover; display:block; }
 .song-cover-ring { position:absolute; inset:0; border-radius:7px; box-shadow:inset 0 0 0 1px var(--line-dark); pointer-events:none; }
 .cover-fallback { display:grid; place-items:center; width:100%; height:100%; font-size:20px; font-weight:600; color:rgba(255,255,255,.94); background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 6px),linear-gradient(145deg,var(--cc,#c2703d),#1a1a18 130%); text-shadow:0 1px 6px rgba(0,0,0,.5); }
-.tt-label .cover-fallback { font-size:16px; }
 .song-main { display:flex; flex-direction:column; gap:3px; min-width:0; }
 .song-title { font-size:15px; font-weight:550; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .song-artist { font-size:12.5px; color:var(--ink-faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -94,7 +91,6 @@
 .song-action .i-pause { display:none; }
 .song-item.is-playing .song-action .i-play { display:none; }
 .song-item.is-playing .song-action .i-pause { display:block; }
-.music-tip { margin:26px 0 96px; font-size:12.5px; color:var(--ink-faint); }
 .empty-state { padding:60px 0 120px; text-align:center; color:var(--ink-soft); }
 .empty-state h2 { color:var(--ink); font-weight:560; margin:0 0 10px; }
 @media (max-width:860px) { .turntable { grid-template-columns:1fr; gap:28px; padding:26px; } .tt-stage { max-width:300px; margin:0 auto; } .song-item { grid-template-columns:22px 46px minmax(0,1fr) 30px; gap:12px; } .song-note { display:none; } .song-cover { width:46px; height:46px; } }

@@ -9,11 +9,8 @@
 #   year     年份                      （可选）
 #   audio    music/ 目录下的音频文件名 （必填）
 #   cover    assets/images/covers/ 下的封面图文件名（可选，留空用色块封面）
-#   color    色块封面的主色            （可选，留空用默认琥珀色）
+#   color    主题色                    （可选）
 #   note     一句话备注                （可选）
-#
-# ⚠️ 下面三条是占位示例，请替换成你自己的歌。
-#    音频文件放到仓库的 music/ 目录，文件名和这里的 audio 保持一致。
 # ============================================================
 
 - title: If I Stay
@@ -21,19 +18,3 @@
   audio: if-i-stay.mp3
   color: "#4a6fa5"
   note: 收藏的第一首
-
-- title: 月光奏鸣曲 · 第一乐章
-  artist: Ludwig van Beethoven
-  album: Piano Sonata No.14
-  year: 1801
-  audio: example-01.mp3
-  color: "#c2703d"
-  note: 占位示例 —— 换成你真正想放的歌
-
-- title: Clair de Lune
-  artist: Claude Debussy
-  album: Suite Bergamasque
-  year: 1905
-  audio: example-02.mp3
-  color: "#7a5c9e"
-  note: 占位示例 —— 删掉即可

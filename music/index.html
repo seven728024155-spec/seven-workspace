@@ -8,9 +8,6 @@ permalink: /music/
 <section class="container page-header">
   <p class="eyebrow">Vinyl</p>
   <h1>唱片机</h1>
-  <p class="hero-sub">
-    收藏的歌单。进来不会自动响 —— 挑一首，自己按下播放键，唱片才会转起来。
-  </p>
 </section>
 
 {% if site.data.songs %}
@@ -26,7 +23,6 @@ permalink: /music/
       <div class="tt-platter">
         <div class="tt-disc" id="tt-disc">
           <div class="tt-grooves"></div>
-          <div class="tt-label" id="tt-label"></div>
           <div class="tt-hole"></div>
         </div>
         <div class="tt-shine" aria-hidden="true"></div>
@@ -132,10 +128,6 @@ permalink: /music/
       </li>
     {% endfor %}
   </ul>
-
-  <p class="music-tip">
-    音频文件放在仓库的 <code>music/</code> 目录，歌单在 <code>_data/songs.yml</code> 里维护。
-  </p>
 </section>
 
 {% else %}

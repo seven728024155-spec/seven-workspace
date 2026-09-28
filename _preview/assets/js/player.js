@@ -16,7 +16,6 @@
 
   const disc = document.getElementById("tt-disc");
   const arm = document.getElementById("tt-arm");
-  const label = document.getElementById("tt-label");
   const elTitle = document.getElementById("tt-title");
   const elArtist = document.getElementById("tt-artist");
   const elAlbum = document.getElementById("tt-album");
@@ -85,23 +84,6 @@
   }
 
   // ---- 渲染 ----
-  function renderCover(node, track) {
-    node.innerHTML = "";
-    if (track.cover) {
-      const img = document.createElement("img");
-      img.src = track.cover;
-      img.alt = track.title + " 封面";
-      img.loading = "lazy";
-      node.appendChild(img);
-      return;
-    }
-    const fb = document.createElement("span");
-    fb.className = "cover-fallback";
-    fb.textContent = initialOf(track.title);
-    fb.style.setProperty("--cc", track.color);
-    node.appendChild(fb);
-  }
-
   function selectTrack(i, autoplay) {
     if (i < 0) i = tracks.length - 1;
     if (i >= tracks.length) i = 0;
@@ -123,9 +105,6 @@
       elAlbum.textContent = bits.join(" · ");
     }
     if (elNote) elNote.textContent = t.note ? "“" + t.note + "”" : "";
-
-    // 唱片中心标签
-    if (label) renderCover(label, t);
 
     // 主题色跟着歌走
     if (turntable) turntable.style.setProperty("--tt-accent", t.color);
