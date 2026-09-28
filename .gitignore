@@ -20,6 +20,10 @@ Thumbs.db
 # 项目自己的"用户数据"目录（不要同步）
 .workbuddy/
 
+# 本地预览与自检产物
+_preview/
+_shots/
+
 # 临时文件与缓存
 *.log
 *.tmp

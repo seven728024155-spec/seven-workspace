@@ -17,6 +17,9 @@ kramdown:
 
 # 不走 Jekyll 的目录 / 文件（下载区、纯静态说明页）
 exclude:
+  - _preview
+  - _preview_build.py
+  - _shots
   - files/README.md
   - README.md
   - LICENSE
