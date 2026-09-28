@@ -42,6 +42,24 @@ title: 首页
 
   <article class="card">
     <p class="card-index">02</p>
+    <h3>唱片机</h3>
+    <p>收藏的歌单。进来不会自动响 —— 挑一首，自己按下播放键，唱片才转起来。</p>
+    <ul class="latest-list">
+      {% for song in site.data.songs limit:3 %}
+        <li>
+          <a href="{{ '/music/' | relative_url }}">{{ song.title }}</a>
+          <span class="date">{{ song.artist }}</span>
+        </li>
+      {% endfor %}
+      {% if site.data.songs == empty %}
+        <li class="muted">歌单还空着，在 <code>_data/songs.yml</code> 里加几首。</li>
+      {% endif %}
+    </ul>
+    <a class="card-link" href="{{ '/music/' | relative_url }}">去听听 →</a>
+  </article>
+
+  <article class="card">
+    <p class="card-index">03</p>
     <h3>可下载</h3>
     <p>{{ content.modules.files_desc | default: "把好用的工具、资料与模板放在这里，随时取用。" }}</p>
     <ul class="latest-list" id="latest-files">
@@ -51,7 +69,7 @@ title: 首页
   </article>
 
   <article class="card">
-    <p class="card-index">03</p>
+    <p class="card-index">04</p>
     <h3>关于</h3>
     <p>{{ content.modules.about_desc | default: "我是 Seven，常驻西安。喜欢折腾工具，也喜欢把复杂的事讲清楚。" }}</p>
     <a class="card-link" href="{{ '/about/' | relative_url }}">了解更多 →</a>

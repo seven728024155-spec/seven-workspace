@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Seven 收藏的歌单。进来不会自动响，挑一首自己按下播放键。" />
+  <meta name="theme-color" content="#f7f7f5" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span class="brand-name">seven</span>
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a class="" href="/">首页</a>
+        <a class="" href="/posts/">文章</a>
+        <a class="" href="/music/">唱片机</a>
+        <a class="" href="/files/">资源</a>
+        <a class="" href="/about/">关于</a>
+        <a class="" href="/admin/">⚙️ 后台</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container page-header">
+  <p class="eyebrow">Vinyl</p>
+  <h1>唱片机</h1>
+  <p class="hero-sub">
+    收藏的歌单。进来不会自动响 —— 挑一首，自己按下播放键，唱片才会转起来。
+  </p>
+</section>
+
+
+<section class="container">
+
+  <!-- ============================================================
+       唱片机本体
+       ============================================================ -->
+  <div class="turntable" id="turntable">
+
+    <!-- 左：唱盘 -->
+    <div class="tt-stage">
+      <div class="tt-platter">
+        <div class="tt-disc" id="tt-disc">
+          <div class="tt-grooves"></div>
+          <div class="tt-label" id="tt-label"></div>
+          <div class="tt-hole"></div>
+        </div>
+        <div class="tt-shine" aria-hidden="true"></div>
+      </div>
+
+      <!-- 唱臂 -->
+      <div class="tt-arm" id="tt-arm" aria-hidden="true">
+        <div class="tt-arm-pivot"></div>
+        <div class="tt-arm-rod">
+          <div class="tt-arm-head"></div>
+        </div>
+      </div>
+
+      <div class="tt-power" id="tt-power" aria-hidden="true"></div>
+    </div>
+
+    <!-- 右：信息与控制 -->
+    <div class="tt-panel">
+      <div class="tt-status" id="tt-status">
+        <span class="tt-status-dot"></span>
+        <span id="tt-status-text">待机 · 未选择曲目</span>
+      </div>
+
+      <h2 class="tt-title" id="tt-title">挑一首吧</h2>
+      <p class="tt-artist" id="tt-artist">从下面的歌单里点任意一首</p>
+      <p class="tt-album" id="tt-album"></p>
+      <p class="tt-note" id="tt-note"></p>
+
+      <!-- 控制条 -->
+      <div class="tt-controls">
+        <button class="tt-btn" id="btn-prev" type="button" aria-label="上一首">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6v12M19 6l-9 6 9 6z"/></svg>
+        </button>
+        <button class="tt-btn tt-btn-main" id="btn-play" type="button" aria-label="播放">
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h4v16H7zM15 4h4v16h-4z"/></svg>
+        </button>
+        <button class="tt-btn" id="btn-next" type="button" aria-label="下一首">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 6v12M5 6l9 6-9 6z"/></svg>
+        </button>
+
+        <div class="tt-volume">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zM17 8a6 6 0 010 8"/></svg>
+          <input type="range" id="tt-vol" min="0" max="100" value="80" aria-label="音量" />
+        </div>
+      </div>
+
+      <!-- 进度 -->
+      <div class="tt-progress">
+        <span class="tt-time" id="tt-cur">0:00</span>
+        <input type="range" id="tt-seek" min="0" max="1000" value="0" aria-label="播放进度" />
+        <span class="tt-time" id="tt-dur">0:00</span>
+      </div>
+
+      <p class="tt-hint" id="tt-hint"></p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       歌单
+       ============================================================ -->
+  <div class="songlist-head">
+    <h2>歌单</h2>
+    <span class="songlist-count">3 首</span>
+  </div>
+
+  <ul class="song-list" id="song-list">
+    
+      <li class="song-item" tabindex="0" role="button"
+          data-audio="/music/if-i-stay.mp3"
+          data-title="If I Stay"
+          data-artist="Shaun Gibson"
+          data-album=""
+          data-year=""
+          data-note="收藏的第一首"
+          data-color="#4a6fa5"
+          data-cover="">
+        <span class="song-index"></span>
+
+        <span class="song-cover" style="--cc: #4a6fa5">
+          
+            <span class="cover-fallback"></span>
+          
+          <span class="song-cover-ring"></span>
+        </span>
+
+        <span class="song-main">
+          <span class="song-title">If I Stay</span>
+          <span class="song-artist">Shaun Gibson</span>
+        </span>
+
+        
+          <span class="song-note">收藏的第一首</span>
+        
+
+        <span class="song-action" aria-hidden="true">
+          <svg class="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24"><path d="M7 4h4v16H7zM15 4h4v16h-4z"/></svg>
+        </span>
+      </li>
+    
+      <li class="song-item" tabindex="0" role="button"
+          data-audio="/music/example-01.mp3"
+          data-title="月光奏鸣曲 · 第一乐章"
+          data-artist="Ludwig van Beethoven"
+          data-album="Piano Sonata No.14"
+          data-year="1801"
+          data-note="占位示例 —— 换成你真正想放的歌"
+          data-color="#c2703d"
+          data-cover="">
+        <span class="song-index"></span>
+
+        <span class="song-cover" style="--cc: #c2703d">
+          
+            <span class="cover-fallback"></span>
+          
+          <span class="song-cover-ring"></span>
+        </span>
+
+        <span class="song-main">
+          <span class="song-title">月光奏鸣曲 · 第一乐章</span>
+          <span class="song-artist">Ludwig van Beethoven · Piano Sonata No.14 · 1801</span>
+        </span>
+
+        
+          <span class="song-note">占位示例 —— 换成你真正想放的歌</span>
+        
+
+        <span class="song-action" aria-hidden="true">
+          <svg class="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24"><path d="M7 4h4v16H7zM15 4h4v16h-4z"/></svg>
+        </span>
+      </li>
+    
+      <li class="song-item" tabindex="0" role="button"
+          data-audio="/music/example-02.mp3"
+          data-title="Clair de Lune"
+          data-artist="Claude Debussy"
+          data-album="Suite Bergamasque"
+          data-year="1905"
+          data-note="占位示例 —— 删掉即可"
+          data-color="#7a5c9e"
+          data-cover="">
+        <span class="song-index"></span>
+
+        <span class="song-cover" style="--cc: #7a5c9e">
+          
+            <span class="cover-fallback"></span>
+          
+          <span class="song-cover-ring"></span>
+        </span>
+
+        <span class="song-main">
+          <span class="song-title">Clair de Lune</span>
+          <span class="song-artist">Claude Debussy · Suite Bergamasque · 1905</span>
+        </span>
+
+        
+          <span class="song-note">占位示例 —— 删掉即可</span>
+        
+
+        <span class="song-action" aria-hidden="true">
+          <svg class="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24"><path d="M7 4h4v16H7zM15 4h4v16h-4z"/></svg>
+        </span>
+      </li>
+    
+  </ul>
+
+  <p class="music-tip">
+    音频文件放在仓库的 <code>music/</code> 目录，歌单在 <code>_data/songs.yml</code> 里维护。
+  </p>
+</section>
+
+
+
+<script src="/assets/js/player.js"></script>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> seven · 由 GitHub Pages 托管 · <a href="/admin/" title="管理后台" style="opacity: 0.65; font-size: 0.9em; text-decoration: none;">⚙️ 管理后台</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 年份回填（不依赖 main.js，让 Liquid 页面也能用）
+    document.getElementById('year') &&
+      (document.getElementById('year').textContent = new Date().getFullYear());
+  </script>
+  
+  
+</body>
+</html>

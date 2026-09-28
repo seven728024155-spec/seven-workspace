@@ -1,0 +1,150 @@
+---
+layout: default
+title: 唱片机
+description: Seven 收藏的歌单。进来不会自动响，挑一首自己按下播放键。
+permalink: /music/
+---
+
+<section class="container page-header">
+  <p class="eyebrow">Vinyl</p>
+  <h1>唱片机</h1>
+  <p class="hero-sub">
+    收藏的歌单。进来不会自动响 —— 挑一首，自己按下播放键，唱片才会转起来。
+  </p>
+</section>
+
+{% if site.data.songs %}
+<section class="container">
+
+  <!-- ============================================================
+       唱片机本体
+       ============================================================ -->
+  <div class="turntable" id="turntable">
+
+    <!-- 左：唱盘 -->
+    <div class="tt-stage">
+      <div class="tt-platter">
+        <div class="tt-disc" id="tt-disc">
+          <div class="tt-grooves"></div>
+          <div class="tt-label" id="tt-label"></div>
+          <div class="tt-hole"></div>
+        </div>
+        <div class="tt-shine" aria-hidden="true"></div>
+      </div>
+
+      <!-- 唱臂 -->
+      <div class="tt-arm" id="tt-arm" aria-hidden="true">
+        <div class="tt-arm-pivot"></div>
+        <div class="tt-arm-rod">
+          <div class="tt-arm-head"></div>
+        </div>
+      </div>
+
+      <div class="tt-power" id="tt-power" aria-hidden="true"></div>
+    </div>
+
+    <!-- 右：信息与控制 -->
+    <div class="tt-panel">
+      <div class="tt-status" id="tt-status">
+        <span class="tt-status-dot"></span>
+        <span id="tt-status-text">待机 · 未选择曲目</span>
+      </div>
+
+      <h2 class="tt-title" id="tt-title">挑一首吧</h2>
+      <p class="tt-artist" id="tt-artist">从下面的歌单里点任意一首</p>
+      <p class="tt-album" id="tt-album"></p>
+      <p class="tt-note" id="tt-note"></p>
+
+      <!-- 控制条 -->
+      <div class="tt-controls">
+        <button class="tt-btn" id="btn-prev" type="button" aria-label="上一首">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6v12M19 6l-9 6 9 6z"/></svg>
+        </button>
+        <button class="tt-btn tt-btn-main" id="btn-play" type="button" aria-label="播放">
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h4v16H7zM15 4h4v16h-4z"/></svg>
+        </button>
+        <button class="tt-btn" id="btn-next" type="button" aria-label="下一首">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 6v12M5 6l9 6-9 6z"/></svg>
+        </button>
+
+        <div class="tt-volume">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zM17 8a6 6 0 010 8"/></svg>
+          <input type="range" id="tt-vol" min="0" max="100" value="80" aria-label="音量" />
+        </div>
+      </div>
+
+      <!-- 进度 -->
+      <div class="tt-progress">
+        <span class="tt-time" id="tt-cur">0:00</span>
+        <input type="range" id="tt-seek" min="0" max="1000" value="0" aria-label="播放进度" />
+        <span class="tt-time" id="tt-dur">0:00</span>
+      </div>
+
+      <p class="tt-hint" id="tt-hint"></p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       歌单
+       ============================================================ -->
+  <div class="songlist-head">
+    <h2>歌单</h2>
+    <span class="songlist-count">{{ site.data.songs.size }} 首</span>
+  </div>
+
+  <ul class="song-list" id="song-list">
+    {% for song in site.data.songs %}
+      <li class="song-item" tabindex="0" role="button"
+          data-audio="{{ '/music/' | relative_url }}{{ song.audio }}"
+          data-title="{{ song.title }}"
+          data-artist="{{ song.artist }}"
+          data-album="{{ song.album }}"
+          data-year="{{ song.year }}"
+          data-note="{{ song.note }}"
+          data-color="{{ song.color | default: '#c2703d' }}"
+          data-cover="{% if song.cover %}{{ '/assets/images/covers/' | relative_url }}{{ song.cover }}{% endif %}">
+        <span class="song-index"></span>
+
+        <span class="song-cover" style="--cc: {{ song.color | default: '#c2703d' }}">
+          {% if song.cover %}
+            <img src="{{ '/assets/images/covers/' | relative_url }}{{ song.cover }}"
+                 alt="{{ song.title }} 封面" loading="lazy" />
+          {% else %}
+            <span class="cover-fallback"></span>
+          {% endif %}
+          <span class="song-cover-ring"></span>
+        </span>
+
+        <span class="song-main">
+          <span class="song-title">{{ song.title }}</span>
+          <span class="song-artist">{{ song.artist }}{% if song.album %} · {{ song.album }}{% endif %}{% if song.year %} · {{ song.year }}{% endif %}</span>
+        </span>
+
+        {% if song.note %}
+          <span class="song-note">{{ song.note }}</span>
+        {% endif %}
+
+        <span class="song-action" aria-hidden="true">
+          <svg class="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24"><path d="M7 4h4v16H7zM15 4h4v16h-4z"/></svg>
+        </span>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p class="music-tip">
+    音频文件放在仓库的 <code>music/</code> 目录，歌单在 <code>_data/songs.yml</code> 里维护。
+  </p>
+</section>
+
+{% else %}
+<section class="container">
+  <div class="empty-state">
+    <h2>歌单还是空的</h2>
+    <p>在仓库的 <code>_data/songs.yml</code> 里加几首歌，push 之后这里就会自动出现。</p>
+  </div>
+</section>
+{% endif %}
+
+<script src="{{ '/assets/js/player.js' | relative_url }}"></script>

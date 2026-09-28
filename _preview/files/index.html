@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Seven 的个人工作空间——文章、笔记、可下载资源。一个慢慢搭建的数字角落。" />
+  <meta name="theme-color" content="#f7f7f5" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span class="brand-name">seven</span>
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a class="" href="/">首页</a>
+        <a class="" href="/posts/">文章</a>
+        <a class="" href="/music/">唱片机</a>
+        <a class="" href="/files/">资源</a>
+        <a class="" href="/about/">关于</a>
+        <a class="" href="/admin/">⚙️ 后台</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container page-header">
+  <p class="eyebrow">Resources</p>
+  <h1>资源下载</h1>
+  <p class="hero-sub">把我确认好用的工具、模板和资料放在这里，欢迎自由取用。</p>
+</section>
+
+<section class="container">
+  <table class="file-table" id="file-table">
+    <thead>
+      <tr>
+        <th>文件名</th>
+        <th>大小</th>
+        <th>更新时间</th>
+        <th>下载</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="4" class="muted">正在加载文件列表…</td></tr>
+    </tbody>
+  </table>
+</section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> seven · 由 GitHub Pages 托管 · <a href="/admin/" title="管理后台" style="opacity: 0.65; font-size: 0.9em; text-decoration: none;">⚙️ 管理后台</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // 年份回填（不依赖 main.js，让 Liquid 页面也能用）
+    document.getElementById('year') &&
+      (document.getElementById('year').textContent = new Date().getFullYear());
+  </script>
+  
+  
+</body>
+</html>
